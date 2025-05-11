@@ -16,17 +16,25 @@ class Second extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('${context.watch<Cart>().count})'),
-            Text('${context.watch<Cart>().cart})'),
+            Text('Total de Itens: ${context.watch<Cart>().count}'),
+            //Text('${context.watch<Cart>().cart})'),
+            Expanded(
+              child: ListView.builder(
+              itemCount: context.watch<Cart>().count,
+              itemBuilder: (context, index) {
+                return ListTile(title: Text(context.watch<Cart>().cart[index]));
+              },
+            )
+          )
           ],
         ),
       ),
-       floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         key: Key('addItem_floatingActionButton'),
-        onPressed:() => context.read<Cart>().addItem('novo item ❤'), 
+        onPressed: () => context.read<Cart>().addItem('novo item ❤'),
         tooltip: 'Adicionar novo item!',
         child: const Icon(Icons.add),
-      )
+      ),
     );
   }
 }
